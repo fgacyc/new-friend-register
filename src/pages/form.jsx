@@ -13,9 +13,11 @@ const Option = Select.Option;
 
 
 function QuestionSection({title, children,className}){
+    const {t} =  useTranslation();
+
     return (
         <div className={className}>
-            <h2 className={"text-sm  mb-1 text-[#454959]"}>{title}</h2>
+            <h2 className={"text-sm  mb-1 text-[#454959]"}>{t(title)}</h2>
             {children}
         </div>
     )
@@ -24,7 +26,8 @@ function QuestionSection({title, children,className}){
 
 
 export  default function Form(){
-    const {t} =  useTranslation();
+    const {t,i18n} =  useTranslation();
+    const lang = i18n.language;
     const [isAllowSubmit,setIsAllowSubmit] = useState(true);
     const [country, setCountry] = useFormStore(state => [state.country, state.setCountry])
     const [
@@ -57,7 +60,7 @@ export  default function Form(){
 
         if(user.data !== null){
             setIsAllowSubmit(false);
-            alert("You have already submitted the form")
+            // alert("You have already submitted the form") #TODO: uncomment this line
         }
 
 
@@ -79,7 +82,7 @@ export  default function Form(){
 
     return (
        <>
-           <Block title={"Hi there! 👋"}>
+           <Block title={`${t("Hi there!")} 👋`}>
                <QuestionSection title={"Which country are you currently living in?"} className={"mb-4"}>
                    <CountryDropdown
                        showDefaultOption={false}
@@ -89,27 +92,40 @@ export  default function Form(){
                </QuestionSection>
 
                <QuestionSection title={"Which city are you from?(eg. KL, Johor...)"}  className={"mb-4"}>
-                   <Input  placeholder='Enter your city'  value={city} onChange={setCity}/>
+                   <Input  placeholder={t("Enter your city")}  value={city} onChange={setCity}/>
                </QuestionSection>
            </Block>
-           <div className={"text-center px-4 mb-16"}>
-               <div className={"text-3xl font-bold"}>CONNECT</div>
-               <div className={"text-lg font-bold"}>WITH US</div>
-               <div className={"text-base mt-4"}>
-                   Hi! Welcome to FGA! No matter who you are, you Belong here. Please fill in the details below so that we can help connect you to your next step.
-               </div>
-           </div>
+           {
+               lang === "zh"
+                   ? <div className={"text-center px-4 mb-16"}>
+                       <div className={"text-3xl font-bold"}>连接</div>
+                       <div className={"text-lg font-bold"}>与我们</div>
+                       <div className={"text-base mt-4"}>
+                           嗨！欢迎来到FGA！不管你是谁，你都属于这里。请填写以下信息，以便
+                           我们可以帮助你进入下一步。
+                       </div>
+                   </div>
+                   : <div className={"text-center px-4 mb-16"}>
+                       <div className={"text-3xl font-bold"}>CONNECT</div>
+                       <div className={"text-lg font-bold"}>WITH US</div>
+                       <div className={"text-base mt-4"}>
+                           Hi! Welcome to FGA! No matter who you are, you Belong here. Please fill in the details below so
+                           that we can help connect you to your next step.
+                       </div>
+                   </div>
 
-           <Block title={"Nice to meet you! 😊"}>
+           }
+
+           <Block title={`${t("Nice to meet you!")} 😊`}>
                <QuestionSection title={"Please select from the following"} className={"mb-4"}>
                    <CheckboxGroup direction='vertical' options={states}
-                    onChange={setState}
+                                  onChange={setState}
                    />
                </QuestionSection>
            </Block>
 
-           <Block title={"Tell us more about you! 😎"}>
-               <QuestionSection title={"First Name"} className={"mb-4"}>
+           <Block title={`${t("Tell us more about you!")} 😎`}>
+           <QuestionSection title={"First Name"} className={"mb-4"}>
                    <Input  placeholder=''  value={firstName} onChange={setFirstName}/>
                </QuestionSection>
                <QuestionSection title={"Last Name"} className={"mb-4"}>
@@ -128,8 +144,8 @@ export  default function Form(){
                     <RadioGroup
                         onChange={setGender}
                     >
-                        <Radio value='Male'>Male</Radio>
-                        <Radio value='Female'>Female</Radio>
+                        <Radio value='Male'>{t("Male")}</Radio>
+                        <Radio value='Female'>{t("Female")}</Radio>
                     </RadioGroup>
                 </QuestionSection>
 
@@ -141,7 +157,7 @@ export  default function Form(){
 
                <QuestionSection title={"Industry"} className={"mb-4"}>
                    <Select
-                       placeholder='Select  your industry'
+                       placeholder={t('Select your industry')}
                        style={{ width: "100%" }}
                           onChange={setIndustry}
                    >
@@ -154,28 +170,28 @@ export  default function Form(){
                </QuestionSection>
            </Block>
 
-           <Block title={"Faith Background 🙏"}>
+           <Block title={`${t("Faith Background")} 🙏`}>
                <QuestionSection title={"Are you a Christian?"} className={"mb-4"}>
                    <RadioGroup  onChange={setIsChristian}>
-                       <Radio value='yes'>Yes</Radio>
-                       <Radio value='no'>No</Radio>
+                       <Radio value='yes'>{t("Yes")}</Radio>
+                       <Radio value='no'>{t("No")}</Radio>
                    </RadioGroup>
                </QuestionSection>
                <QuestionSection title={"Baptism Status"} className={"mb-4"}>
                    <RadioGroup onChange={setIsBaptized}>
-                       <Radio value='yes'>Yes</Radio>
-                       <Radio value='no'>No</Radio>
+                       <Radio value='yes'>{t("Yes")}</Radio>
+                       <Radio value='no'>{t("No")}</Radio>
                    </RadioGroup>
                </QuestionSection>
                <QuestionSection title={"Do you have a regular church?"} className={"mb-4"}>
                    <RadioGroup onChange={setHasRegularChurch}>
-                       <Radio value='yes'>Yes</Radio>
-                       <Radio value='no'>No</Radio>
+                       <Radio value='yes'>{t("Yes")}</Radio>
+                       <Radio value='no'>{t("No")}</Radio>
                    </RadioGroup>
                </QuestionSection>
                <QuestionSection title={"How did you learn about our church?"} className={"mb-4"}>
                    <Select
-                       placeholder='Select  how you know about us'
+                       placeholder={t('Select how you know about us')}
                        style={{ width: "100%" }}
                             onChange={setWayKnowUs}
                    >
@@ -191,7 +207,7 @@ export  default function Form(){
                <button className={"bg-[#353535] text-white px-4 py-2 rounded-lg mt-4  text-center] w-full"}
                 onClick={submit}
                >
-                   Submit
+                   {t("Submit")}
                </button>
            </div>
        </>
