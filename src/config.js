@@ -1,4 +1,3 @@
-import i18n from "i18next";
 
 export const states = [
     i18n.t("I am new here"),
