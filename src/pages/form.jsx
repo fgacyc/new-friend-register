@@ -95,7 +95,7 @@ export  default function Form(){
 
         if(user.data !== null){
             setIsAllowSubmit(false);
-            alert("You have already submitted the form")
+            alert("You have already submitted this form")
         }
 
 
@@ -103,7 +103,7 @@ export  default function Form(){
 
     async function submit(){
         if(!isAllowSubmit) {
-            alert("You have already submitted the form");
+            alert("You have already submitted this form");
             return;
         }
         const data = getForm();
