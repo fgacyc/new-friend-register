@@ -3,14 +3,13 @@ import {CountryDropdown} from "react-country-region-selector";
 import {Input, Checkbox, Radio, DatePicker,Select} from "@arco-design/web-react";
 import {useTranslation} from "react-i18next";
 import {useFormStore} from "@/store/form-store.js";
-
 import {createForm, useUser} from "@/api/welcome.js";
 import {useEffect, useState} from "react";
 import {useUserStore} from "@/store/user-store.js";
 const CheckboxGroup = Checkbox.Group;
 const RadioGroup = Radio.Group;
 const Option = Select.Option;
-import i18n from "i18next";
+
 
 
 
