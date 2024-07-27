@@ -95,7 +95,7 @@ export  default function Form(){
 
         if(user.data !== null){
             setIsAllowSubmit(false);
-            // alert("You have already submitted the form") #TODO: uncomment this line
+            alert("You have already submitted the form")
         }
 
 
