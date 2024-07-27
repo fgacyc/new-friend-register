@@ -4,6 +4,7 @@ import {Input, Checkbox, Radio, DatePicker,Select} from "@arco-design/web-react"
 import {useTranslation} from "react-i18next";
 import {useFormStore} from "@/store/form-store.js";
 import {industryOptions, states, wauKnowAboutUs} from "@/config.js";
+import {createForm} from "@/api/welcome.js";
 const CheckboxGroup = Checkbox.Group;
 const RadioGroup = Radio.Group;
 const Option = Select.Option;
@@ -45,8 +46,14 @@ export  default function Form(){
     ])
     const  getForm = useFormStore(state => state.getForm);
 
-    function submit(){
-        console.log(getForm())
+    async function submit(){
+        const data = getForm();
+        const response = await createForm(data);
+        if(response.status){
+            alert("Form submitted successfully")
+        }else{
+            alert("Form submission failed")
+        }
     }
 
     return (

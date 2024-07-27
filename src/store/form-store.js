@@ -1,4 +1,5 @@
 import { create } from 'zustand'
+import {useUserStore} from "@/store/user-store.js";
 
 export const useFormStore = create((set) => ({
     country: "Malaysia",
@@ -49,21 +50,22 @@ export const useFormStore = create((set) => ({
 
     getForm(){
         return {
+            user_id : useUserStore.getState().UID,
             country: useFormStore.getState().country,
             city: useFormStore.getState().city,
             state: useFormStore.getState().state,
-            firstName: useFormStore.getState().firstName,
-            lastName: useFormStore.getState().lastName,
-            ChineseName: useFormStore.getState().ChineseName,
+            first_name: useFormStore.getState().firstName,
+            last_name: useFormStore.getState().lastName,
+            chinese_name: useFormStore.getState().ChineseName,
             phone: useFormStore.getState().phone,
             email: useFormStore.getState().email,
             gender: useFormStore.getState().gender,
-            birthDate: useFormStore.getState().birthDate,
+            birth_date: useFormStore.getState().birthDate,
             industry: useFormStore.getState().industry,
-            isChristian: useFormStore.getState().isChristian,
-            isBaptized: useFormStore.getState().isBaptized,
-            hasRegularChurch: useFormStore.getState().hasRegularChurch,
-            wayKnowUs: useFormStore.getState().wayKnowUs
+            is_christian: useFormStore.getState().isChristian === "yes",
+            is_baptized: useFormStore.getState().isBaptized === "yes",
+            has_regular_church: useFormStore.getState().hasRegularChurch === "yes",
+            way_know_us: useFormStore.getState().wayKnowUs
         }
     }
 }))
