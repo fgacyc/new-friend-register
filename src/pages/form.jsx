@@ -4,7 +4,9 @@ import {Input, Checkbox, Radio, DatePicker,Select} from "@arco-design/web-react"
 import {useTranslation} from "react-i18next";
 import {useFormStore} from "@/store/form-store.js";
 import {industryOptions, states, wauKnowAboutUs} from "@/config.js";
-import {createForm} from "@/api/welcome.js";
+import {createForm, useUser} from "@/api/welcome.js";
+import {useEffect, useState} from "react";
+import {useUserStore} from "@/store/user-store.js";
 const CheckboxGroup = Checkbox.Group;
 const RadioGroup = Radio.Group;
 const Option = Select.Option;
@@ -23,6 +25,7 @@ function QuestionSection({title, children,className}){
 
 export  default function Form(){
     const {t} =  useTranslation();
+    const [isAllowSubmit,setIsAllowSubmit] = useState(true);
     const [country, setCountry] = useFormStore(state => [state.country, state.setCountry])
     const [
         city, setCity,state,setState,firstName,setFirstName,lastName,setLastName,ChineseName,setChineseName,phone,setPhone,
@@ -45,8 +48,26 @@ export  default function Form(){
         state.wayKnowUs,state.setWayKnowUs
     ])
     const  getForm = useFormStore(state => state.getForm);
+    const UID = useUserStore(state => state.UID);
+    const {user ,isLoading,isError} = useUser(UID);
+
+    useEffect(() => {
+        if (isLoading || isError) return;
+        console.log(user)
+
+        if(user.data !== null){
+            setIsAllowSubmit(false);
+            alert("You have already submitted the form")
+        }
+
+
+    }, [isLoading]);
 
     async function submit(){
+        if(!isAllowSubmit) {
+            alert("You have already submitted the form");
+            return;
+        }
         const data = getForm();
         const response = await createForm(data);
         if(response.status){
