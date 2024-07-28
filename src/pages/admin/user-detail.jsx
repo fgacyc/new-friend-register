@@ -127,32 +127,34 @@ export default function UserDetail() {
     return (
         <div>
             <NavBar ifShowBackArrow={true}>Guest Detail: {currentUser && currentUser.name}</NavBar>
-            <Block title={"Basic Info"}>
-                {
-                    currentUser && currentUser.type === "welcome"
-                        ? <WelcomeTypeCard data={currentUser}/>
-                        : <FindCGTypeCard data={currentUser}/>
-                }
+            <div className={"h-screen overflow-y-auto"}>
+                <Block title={"Basic Info"}>
+                    {
+                        currentUser && currentUser.type === "welcome"
+                            ? <WelcomeTypeCard data={currentUser}/>
+                            : <FindCGTypeCard data={currentUser}/>
+                    }
 
-            </Block>
-            <Block title={"Assignment"}>
-               Assign to Admin
-            </Block>
+                </Block>
+                <Block title={"Assignment"}>
+                    Assign to Admin
+                </Block>
 
-            <Block title={"Note"}>
-                <TextArea
-                    placeholder='Type note here...'
-                    value={note}
-                    onChange={setNote}
-                />
-            </Block>
+                <Block title={"Note"}>
+                    <TextArea
+                        placeholder='Type note here...'
+                        value={note}
+                        onChange={setNote}
+                    />
+                </Block>
 
 
-            <Block title={"Card History"}>
-                <ul className={"list-disc list-inside"}>
-                    <li>Created At: {currentUser && formDate(currentUser.created_at)}</li>
-                </ul>
-            </Block>
+                <Block title={"Card History"}>
+                    <ul className={"list-disc list-inside"}>
+                        <li>Created At: {currentUser && formDate(currentUser.created_at)}</li>
+                    </ul>
+                </Block>
+            </div>
         </div>
     )
 }
